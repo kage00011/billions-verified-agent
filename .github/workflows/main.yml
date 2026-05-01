@@ -42,3 +42,8 @@ jobs:
         env:
           USERNAME: ${{ github.event.inputs.username }}
           AGENT_DESCRIPTION: ${{ github.event.inputs.agent_description }}
+        - name: Debug after ClawHub install
+  run: |
+    echo "=== AFTER CLAWHUB ==="
+    ls -la
+    find . -maxdepth 4 -type d
