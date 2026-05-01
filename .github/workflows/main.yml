@@ -1,15 +1,16 @@
 name: Verify Human Identity
 
 on:
-workflow_dispatch:
+  workflow_dispatch:
     inputs:
-        description: 'kage00011'
+      username:
+        description: "kage00011"
         required: true
-        default: 'kage00011'
+        default: "kage00011"
       agent_description:
-        description: 'kage00011'
+        description: "kage00011"
         required: true
-        default: 'kage00011 AI Agent'
+        default: "kage00011 AI Agent"
 
 jobs:
   verify:
@@ -22,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Step 1 - Install ClawHub skill
         run: npx clawhub@latest install verified-agent-identity
@@ -37,4 +38,4 @@ jobs:
 
       - name: Step 3 - Link Human to Agent
         run: |
-          node scripts/manualLinkHumanToAgent.js --challenge '{"name": "kage00011", "description": "kage00011 AI Agent"}'*```
+          node scripts/manualLinkHumanToAgent.js --challenge '{"name": "${{ github.event.inputs.username }}", "description": "${{ github
