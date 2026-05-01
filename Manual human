@@ -1,0 +1,51 @@
+// scripts/manualLinkHumanToAgent.js
+
+const fs = require("fs");
+
+// Récupérer l'argument --challenge
+const args = process.argv.slice(2);
+let challengeArg = args.find(arg => arg.startsWith("--challenge"));
+
+if (!challengeArg) {
+  console.error("❌ Missing --challenge argument");
+  process.exit(1);
+}
+
+const challengeJSON = challengeArg.replace("--challenge", "").trim();
+
+let challenge;
+try {
+  challenge = JSON.parse(challengeJSON);
+} catch (err) {
+  console.error("❌ Invalid JSON format for challenge");
+  process.exit(1);
+}
+
+function main() {
+  console.log("🔗 Linking Human to Agent...");
+  console.log("Challenge received:", challenge);
+
+  // Lire l'identité créée
+  let identity;
+  try {
+    identity = JSON.parse(fs.readFileSync("identity.json"));
+  } catch (err) {
+    console.error("❌ identity.json not found. Run Step 2 first.");
+    process.exit(1);
+  }
+
+  const result = {
+    human: challenge.name,
+    agent: challenge.description,
+    wallet: identity.address,
+    timestamp: new Date().toISOString()
+  };
+
+  console.log("✅ Link successful:");
+  console.log(result);
+
+  fs.writeFileSync("link-result.json", JSON.stringify(result, null, 2));
+  console.log("💾 Saved to link-result.json");
+}
+
+main();
