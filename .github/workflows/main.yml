@@ -1,7 +1,7 @@
 name: Verify Human Identity
 
 on:
-  workflows_dispatch:
+workflow_dispatch:
     inputs:
         description: 'kage00011'
         required: true
