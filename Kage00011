@@ -17,12 +17,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: '24'
+          node-version: '20'
 
       - name: Step 1 - Install ClawHub skill
         run: npx clawhub@latest install verified-agent-identity
